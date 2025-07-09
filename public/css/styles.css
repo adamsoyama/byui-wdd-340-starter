@@ -1,6 +1,199 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
+/* === Base Styles for Large Screens === */
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  color: #012622;
+}
+
+/* Header Styles */
+#top-header {
+  background-color: #012622;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+}
+
+#top-header a {
+  list-style: none;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+nav {
+  background-color: rgb(217, 230, 225);
+  padding: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  color: #012622;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main Content Headings */
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  left: 5rem;
+  top: 25%;
+  background-color: rgb(217, 230, 225, 0.2);
+  transform: translateY(-50%);
+  padding: 1.5rem;
+  color: #012622;
+  max-width: 500px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.features {
+  list-style: none;
+  padding-left: 0;
+  line-height: 1.8;
+}
+
+/* CTA Button */
+.cta-btn {
+  background-color: #012622;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.cta-btn:focus {
+  outline: 2px solid #924040;
+}
+
+.feature-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.upgrades {
+  max-width: 50%;
+}
+
+.reviews {
+  max-width: 50%;
+  padding-right: 5rem;
+}
+
+.reviews ul li {
+  line-height: 2.8;
+}
+
+.upgrade-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-left: 7rem;
+  margin-right: 7rem;
+}
+
+.upgrade-link {
+  width: 120px;
+  text-align: center;
+}
+
+.upgrade-link img {
+  width: 100%;
+  height: 100px;
+  border-radius: 6px;
+}
+
+/* Footer Styles */
+#down-footer {
+  background-color: #012622;
+  color: #ffffff;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .hero {
+    height: 350px;
+  }
+
+  .hero-overlay {
+    left: 1rem;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 1rem;
+    max-width: none;
+    background-color: rgba(217, 230, 225, 0.7);
+    text-align: center;
+  }
+
+  .feature-wrapper {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .upgrades,
+  .reviews {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .upgrade-item {
+    justify-content: center;
+    margin: 0;
+  }
+
+  .upgrade-link {
+    width: 100px;
+  }
+
+  .cta-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .reviews ul li {
+    line-height: 2;
+    font-size: 0.95rem;
+    padding: 0 1rem;
+  }
 }
