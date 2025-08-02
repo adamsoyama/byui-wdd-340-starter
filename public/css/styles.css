@@ -197,3 +197,116 @@ h3 {
     padding: 0 1rem;
   }
 }
+
+/* === Classification Page Styles (No Extra Classes) === */
+
+/* Page Title */
+h1 {
+  font-size: 2rem;
+  margin: 2rem 0 1rem;
+  color: #012622;
+}
+
+/* Grid Container */
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Grid Items */
+#inv-display li {
+  list-style: none;
+  background-color: #f4f4f4;
+  border: 1px solid #d9e6e1;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+/* === Classification Grid Enhancements === */
+
+/* Vehicle Name & Price Section */
+.namePrice {
+  margin-top: 1rem;
+  text-align: center;
+  color: #012622;
+}
+
+.namePrice h2 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+.namePrice a {
+  text-decoration: none;
+  color: #012622;
+  font-weight: bold;
+}
+
+.namePrice a:hover {
+  text-decoration: underline;
+}
+
+/* Price Styling */
+.namePrice span {
+  display: block;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* === Responsive Tweaks === */
+
+/* Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+    text-align: center;
+  }
+
+  #inv-display {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  #inv-display li {
+    padding: 0.75rem;
+  }
+  .namePrice h2 {
+    font-size: 1.1rem;
+  }
+
+  .namePrice span {
+    font-size: 1rem;
+  }
+}
+
+/* Phones (max-width: 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+    text-align: center;
+  }
+
+  #inv-display {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  #inv-display li {
+    padding: 0.5rem;
+  }
+  .namePrice h2 {
+    font-size: 1rem;
+  }
+
+  .namePrice span {
+    font-size: 0.95rem;
+  }
+}
