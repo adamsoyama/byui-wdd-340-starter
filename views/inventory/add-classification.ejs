@@ -1,0 +1,35 @@
+<div class="auth-container">
+  <h1><%= title %></h1>
+
+  <% if (errorMessage && errorMessage.length > 0) { %>
+  <div class="flash-message error" role="alert">
+    <ul>
+      <% errorMessage.forEach(function(msg) { %>
+      <li><%= msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+  <% } else if (message && message.length > 0) { %>
+  <div class="flash-message success" role="status"><%= message %></div>
+  <% } %> <% if (errors && errors.length > 0) { %>
+  <div class="flash-message error" role="alert">
+    <ul>
+      <% errors.forEach(function(error) { %>
+      <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+  <% } %>
+
+  <form action="/inv/add-classification" method="POST" class="form-wrapper">
+    <label for="classification_name">Classification Name:</label>
+    <input
+      type="text"
+      id="classification_name"
+      name="classification_name"
+      required
+      minlength="3"
+    />
+    <button type="submit">Add Classification</button>
+  </form>
+</div>

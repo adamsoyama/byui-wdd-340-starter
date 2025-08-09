@@ -1,0 +1,29 @@
+<div class="auth-container">
+  <h1 class="auth-title"><%= title %></h1>
+
+  <% if (errorMessage && errorMessage.length > 0) { %>
+  <div class="flash-message error" role="alert" aria-live="assertive">
+    <ul>
+      <% errorMessage.forEach(function(msg) { %>
+      <li><%= msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+  <% } else if (message && message.length > 0) { %>
+  <div class="flash-message success" role="status" aria-live="polite">
+    <%= message %>
+  </div>
+  <% } %> <% if (errors && errors.length > 0) { %>
+  <div class="flash-message error" role="alert" aria-live="assertive">
+    <ul>
+      <% errors.forEach(function(error) { %>
+      <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+  <% } %>
+
+  <section class="form-wrapper">
+    <%- Util.buildRegisterForm(formData) %>
+  </section>
+</div>

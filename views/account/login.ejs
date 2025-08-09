@@ -1,0 +1,10 @@
+<div class="auth-container">
+  <h1 class="auth-title"><%= title %></h1>
+
+  <% const flash = (message?.[0] || errorMessage?.[0] || "").trim(); %> <% if
+  (flash.length > 0) { %>
+  <div class="flash-message error"><%= flash %></div>
+  <% } %>
+
+  <section class="form-wrapper"><%- loginForm %></section>
+</div>

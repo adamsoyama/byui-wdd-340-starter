@@ -1,0 +1,20 @@
+<div class="management-container">
+  <h1><%= title %></h1>
+
+  <% if (errorMessage && errorMessage.length > 0) { %>
+  <div class="flash-message error" role="alert">
+    <ul>
+      <% errorMessage.forEach(function(msg) { %>
+      <li><%= msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+  <% } else if (message && message.length > 0) { %>
+  <div class="flash-message success" role="status"><%= message %></div>
+  <% } %>
+
+  <ul class="management-links">
+    <li><a href="/inv/add-classification">Add New Classification</a></li>
+    <li><a href="/inv/add-vehicle">Add New Vehicle</a></li>
+  </ul>
+</div>

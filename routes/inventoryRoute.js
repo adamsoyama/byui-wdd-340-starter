@@ -1,19 +1,47 @@
-// Needed Resources
 const express = require("express");
 const router = new express.Router();
 const invController = require("../controllers/invController");
-const utilities = require("../utilities"); // Add this line
+const invValidate = require("../utilities/inventory-validation");
+const Util = require("../utilities");
 
-// Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+// Inventory Views
+router.get(
+  "/type/:classificationId",
+  Util.handleErrors(invController.buildByClassificationId)
+);
+router.get(
+  "/detail/:invId",
+  Util.handleErrors(invController.buildInventoryDetailView)
+);
 
-// Route to build inventory detail view by vehicle ID
-router.get("/detail/:invId", invController.buildInventoryDetailView);
+// Management View
+router.get("/", Util.handleErrors(invController.buildManagement));
 
-// Intentional error route for testing
+// Add Classification
+router.get(
+  "/add-classification",
+  Util.handleErrors(invController.buildAddClassification)
+);
+router.post(
+  "/add-classification",
+  invValidate.classificationRules(),
+  invValidate.checkClassificationData,
+  Util.handleErrors(invController.postAddClassification)
+);
+
+// Add Vehicle
+router.get("/add-vehicle", Util.handleErrors(invController.buildAddVehicle));
+router.post(
+  "/add-vehicle",
+  invValidate.inventoryRules(),
+  invValidate.checkInventoryData,
+  Util.handleErrors(invController.postAddVehicle)
+);
+
+// Error Testing
 router.get(
   "/trigger-error",
-  utilities.handleErrors(async (req, res, next) => {
+  Util.handleErrors(async (req, res) => {
     throw new Error("Intentional server error for testing.");
   })
 );

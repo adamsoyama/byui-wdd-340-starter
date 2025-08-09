@@ -1,0 +1,65 @@
+<div class="auth-container">
+  <h1><%= title %></h1>
+
+  <% if (errorMessage && errorMessage.length > 0) { %>
+    <div class="flash-message error"><%= errorMessage %></div>
+  <% } %>
+
+  <% if (message && message.length > 0) { %>
+    <div class="flash-message success"><%= message %></div>
+  <% } %>
+
+  <% if (errors && errors.length > 0) { %>
+    <div class="flash-message error" role="alert">
+      <ul>
+        <% errors.forEach(err => { %>
+          <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <form action="/inv/add-vehicle" method="POST" class="form-wrapper">
+    <label for="classification_id">Classification:</label>
+    <select name="classification_id" id="classification_id" required>
+      <option value="">-- Select --</option>
+      <% classifications.forEach(c => { %>
+        <option value="<%= c.classification_id %>" <%= formData?.classification_id == c.classification_id ? "selected" : "" %>>
+          <%= c.classification_name %>
+        </option>
+      <% }) %>
+    </select>
+
+    <label for="inv_make">Make:</label>
+    <input type="text" id="inv_make" name="inv_make" value="<%= formData?.inv_make || '' %>" required />
+
+    <label for="inv_model">Model:</label>
+    <input type="text" id="inv_model" name="inv_model" value="<%= formData?.inv_model || '' %>" required />
+
+    <label for="inv_year">Year:</label>
+    <input type="number" id="inv_year" name="inv_year" value="<%= formData?.inv_year || '' %>" required />
+
+    <label for="inv_price">Price:</label>
+    <input type="number" step="0.01" id="inv_price" name="inv_price" value="<%= formData?.inv_price || '' %>" required />
+
+    <label for="inv_miles">Miles:</label>
+    <input type="number" id="inv_miles" name="inv_miles" value="<%= formData?.inv_miles || '' %>" />
+
+    <label for="inv_color">Color:</label>
+    <input type="text" id="inv_color" name="inv_color" value="<%= formData?.inv_color || '' %>" />
+
+    <label for="inv_description">Description:</label>
+    <textarea id="inv_description" name="inv_description" required><%= formData?.inv_description || '' %></textarea>
+
+    <label for="inv_image">Image Path:</label>
+    <input type="text" id="inv_image" name="inv_image" value="<%= formData?.inv_image || '' %>" required />
+
+    <label for="inv_thumbnail">Thumbnail Path:</label>
+    <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<%= formData?.inv_thumbnail || '' %>" required />
+
+    <label for="inv_transmission">Transmission:</label>
+    <input type="text" id="inv_transmission" name="inv_transmission" value="<%= formData?.inv_transmission || '' %>" />
+
+    <button type="submit">Add Vehicle</button>
+  </form>
+</div>
