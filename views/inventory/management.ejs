@@ -1,3 +1,5 @@
+<!-- management.ejs -->
+
 <div class="management-container">
   <h1><%= title %></h1>
 
@@ -17,4 +19,30 @@
     <li><a href="/inv/add-classification">Add New Classification</a></li>
     <li><a href="/inv/add-vehicle">Add New Vehicle</a></li>
   </ul>
+
+  <div class="inventory-management">
+    <h2>Manage Inventory</h2>
+    <p>
+      Select a classification from the list to see the items belonging to that
+      classification.
+    </p>
+
+    <!-- Classification Select List -->
+    <form id="classificationForm"><%- classificationSelect %></form>
+
+    <!-- Inventory Table -->
+    <table id="inventoryDisplay" class="inventory-table">
+      <!-- JavaScript will populate this table -->
+    </table>
+
+    <!-- Fallback for no JavaScript -->
+    <noscript>
+      <p class="noscript-warning">
+        JavaScript must be enabled to use this page.
+      </p>
+    </noscript>
+  </div>
 </div>
+
+<!-- Link to external JavaScript file -->
+<script src="/js/inventory.js" defer></script>

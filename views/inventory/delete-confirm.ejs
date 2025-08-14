@@ -1,0 +1,72 @@
+<div class="auth-container">
+  <h1><%= title %></h1>
+
+  <p>
+    Confirm Deletion — This action is <strong>permanent</strong> and cannot be
+    undone.
+  </p>
+
+  <% if (errorMessage && errorMessage.length > 0) { %>
+  <div class="flash-message error" role="alert"><%= errorMessage %></div>
+  <% } %> <% if (message && message.length > 0) { %>
+  <div class="flash-message success" role="status"><%= message %></div>
+  <% } %>
+
+  <form
+    action="/inv/delete/<%= vehicle.inv_id %>"
+    method="POST"
+    class="form-wrapper"
+    onsubmit="return confirm('Are you sure you want to permanently delete this vehicle?');"
+  >
+    <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>" />
+
+    <fieldset>
+      <legend>Vehicle Details</legend>
+
+      <label for="inv_make">Make:</label>
+      <input
+        type="text"
+        id="inv_make"
+        value="<%= vehicle.inv_make %>"
+        readonly
+      />
+
+      <label for="inv_model">Model:</label>
+      <input
+        type="text"
+        id="inv_model"
+        value="<%= vehicle.inv_model %>"
+        readonly
+      />
+
+      <label for="inv_year">Year:</label>
+      <input
+        type="number"
+        id="inv_year"
+        value="<%= vehicle.inv_year %>"
+        readonly
+      />
+
+      <label for="inv_price">Price:</label>
+      <input
+        type="number"
+        step="0.01"
+        id="inv_price"
+        value="<%= vehicle.inv_price %>"
+        readonly
+      />
+
+      <% if (vehicle.inv_thumbnail) { %>
+      <div class="vehicle-thumbnail">
+        <img
+          src="<%= vehicle.inv_thumbnail %>"
+          alt="Thumbnail of <%= vehicle.inv_make %> <%= vehicle.inv_model %>"
+        />
+      </div>
+      <% } %>
+    </fieldset>
+
+    <button type="submit" class="btn-danger">Delete Vehicle</button>
+    <a href="/inv" class="btn-secondary">Cancel</a>
+  </form>
+</div>

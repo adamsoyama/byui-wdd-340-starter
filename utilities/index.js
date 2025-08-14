@@ -240,4 +240,31 @@ Util.buildAddVehicleForm = function (
   `;
 };
 
+/* ****************************************
+ *  Authorization Middleware: Check Login
+ * **************************************** */
+Util.checkLogin = (req, res, next) => {
+  if (req.session?.account) {
+    return next();
+  }
+
+  req.flash("errorMessage", "Please log in to access this page.");
+  return res.redirect("/account/login");
+};
+
+/* **************************************
+ * Build the classification <select> list
+ ************************************** */
+Util.buildClassificationList = async function (selectedId = "") {
+  const data = await invModel.getClassifications();
+  let list = `<select id="classification_id" name="classification_id" required>`;
+  list += `<option value="">Select a classification</option>`;
+  data.rows.forEach((row) => {
+    const selected = row.classification_id == selectedId ? "selected" : "";
+    list += `<option value="${row.classification_id}" ${selected}>${row.classification_name}</option>`;
+  });
+  list += `</select>`;
+  return list;
+};
+
 module.exports = Util;

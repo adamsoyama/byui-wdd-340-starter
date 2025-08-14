@@ -9,15 +9,24 @@ function normalizeEmail(email) {
 
 /**
  * Find an account by email
+ * Used for login and password comparison
  */
 async function findAccountByEmail(account_email) {
   try {
     const normalizedEmail = normalizeEmail(account_email);
-    const result = await pool.query(
-      "SELECT * FROM account WHERE account_email = $1",
-      [normalizedEmail]
-    );
-    return result.rows[0];
+    const sql = `
+      SELECT 
+        account_id, 
+        account_firstname, 
+        account_lastname, 
+        account_email, 
+        account_type, 
+        account_password 
+      FROM account 
+      WHERE account_email = $1
+    `;
+    const result = await pool.query(sql, [normalizedEmail]);
+    return result.rows[0]; // Returns full record for login validation
   } catch (error) {
     throw new Error("Database error: " + error.message);
   }

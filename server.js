@@ -18,7 +18,8 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
-const Util = require("./utilities"); // ✅ Renamed from 'utilities' to 'Util'
+const Util = require("./utilities");
+const cookieParser = require("cookie-parser");
 
 /* ***********************
  * View Engine and Templates
@@ -63,6 +64,9 @@ app.use(express.json());
 // const bodyParser = require("body-parser");
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
+
+// Cookie middleware
+app.use(cookieParser());
 
 /* ***********************
  * Static Routes

@@ -51,4 +51,46 @@ invValidate.checkInventoryData = async (req, res, next) => {
   next();
 };
 
+// Check update inventory data and redirect to edit view if errors
+function checkUpdateData(req, res, next) {
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    req.flash("errors", errors.array());
+    return res.status(400).render("inventory/edit-inventory", {
+      title: `Edit ${inv_make} ${inv_model}`,
+      nav: res.locals.nav,
+      classificationSelect: Util.buildClassificationList(classification_id),
+      errors: errors.array(),
+      message: null,
+      errorMessage: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    });
+  }
+  next();
+}
+
 module.exports = invValidate;

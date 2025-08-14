@@ -1,0 +1,22 @@
+<div class="auth-container">
+  <h1 class="auth-title"><%= title %></h1>
+
+  <% const flash = (flashMessage?.[0] || errors?.[0] || "").trim(); %> <% if
+  (flash.length > 0) { %>
+  <div class="flash-message error"><%= flash %></div>
+  <% } %>
+
+  <section class="form-wrapper">
+    <p><%= message %></p>
+
+    <% if (account) { %>
+    <p>
+      Welcome, <%= account.account_firstname %> <%= account.account_lastname %>!
+    </p>
+    <p>Email: <%= account.account_email %></p>
+    <p>Account Type: <%= account.account_type %></p>
+    <% } else { %>
+    <p>No account data found.</p>
+    <% } %>
+  </section>
+</div>
