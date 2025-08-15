@@ -1,0 +1,98 @@
+<div class="auth-container">
+  <h1 class="auth-title"><%= title %></h1>
+
+  <% if (message?.length > 0) { %>
+  <div class="flash-message success"><%= message %></div>
+  <% } %> <% if (errorMessage?.length > 0) { %>
+  <div class="flash-message error"><%= errorMessage %></div>
+  <% } %>
+
+  <section class="form-wrapper">
+    <% if (account) { %>
+    <h2>Welcome <%= account.account_firstname %></h2>
+    <p>Email: <%= account.account_email %></p>
+    <p>Account Type: <%= account.account_type %></p>
+
+    <!-- Account Update Form -->
+    <form action="/account/update-account" method="POST" novalidate>
+      <fieldset>
+        <legend>Update Account Information</legend>
+
+        <label for="account_firstname">First Name</label>
+        <input
+          type="text"
+          id="account_firstname"
+          name="account_firstname"
+          required
+          value="<%= data?.account_firstname || account.account_firstname %>"
+        />
+
+        <label for="account_lastname">Last Name</label>
+        <input
+          type="text"
+          id="account_lastname"
+          name="account_lastname"
+          required
+          value="<%= data?.account_lastname || account.account_lastname %>"
+        />
+
+        <label for="account_email">Email Address</label>
+        <input
+          type="email"
+          id="account_email"
+          name="account_email"
+          required
+          value="<%= data?.account_email || account.account_email %>"
+        />
+
+        <input
+          type="hidden"
+          name="account_id"
+          value="<%= account.account_id %>"
+        />
+
+        <button type="submit">Update Account</button>
+      </fieldset>
+    </form>
+
+    <!-- Change Password Form -->
+    <form action="/account/change-password" method="POST" novalidate>
+      <fieldset>
+        <legend>Change Password</legend>
+
+        <p class="form-hint" id="passwordHint">
+          Enter a new password to change your current one. Password must be at
+          least 12 characters and contain at least one number, one uppercase
+          letter, and one special character.
+        </p>
+
+        <label for="account_password">New Password</label>
+        <input
+          type="password"
+          id="account_password"
+          name="account_password"
+          required
+          minlength="12"
+          pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])"
+          aria-describedby="passwordHint"
+        />
+
+        <input
+          type="hidden"
+          name="account_id"
+          value="<%= account.account_id %>"
+        />
+
+        <button type="submit">Change Password</button>
+      </fieldset>
+    </form>
+    <% } else { %>
+    <p>No account data found.</p>
+    <% } %>
+  </section>
+  <div class="form-wrapper">
+    <form action="/account/logout" method="get" class="logout-form">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+</div>

@@ -26,7 +26,7 @@ async function findAccountByEmail(account_email) {
       WHERE account_email = $1
     `;
     const result = await pool.query(sql, [normalizedEmail]);
-    return result.rows[0]; // Returns full record for login validation
+    return result.rows[0];
   } catch (error) {
     throw new Error("Database error: " + error.message);
   }
@@ -65,7 +65,7 @@ async function registerAccount({
       account_password,
     ]);
 
-    return result.rows[0]; // Only returns necessary fields
+    return result.rows[0];
   } catch (error) {
     if (error.code === "23505") {
       throw new Error("Email already exists.");
@@ -75,22 +75,45 @@ async function registerAccount({
 }
 
 /**
- * Get account by ID (useful for session validation or profile views)
+ * Get account by ID
  */
-async function getAccountById(account_id) {
-  try {
-    const result = await pool.query(
-      "SELECT account_id, account_firstname, account_email, account_type FROM account WHERE account_id = $1",
-      [account_id]
-    );
-    return result.rows[0];
-  } catch (error) {
-    throw new Error("Database error: " + error.message);
-  }
+async function getAccountById(accountId) {
+  const sql = "SELECT * FROM account WHERE account_id = $1";
+  const result = await pool.query(sql, [accountId]);
+  return result.rows[0];
+}
+
+/**
+ * Update account details
+ */
+async function updateAccountDetails(accountId, { firstname, lastname, email }) {
+  const normalizedEmail = normalizeEmail(email);
+  const sql = `
+    UPDATE account
+    SET account_firstname = $1,
+        account_lastname = $2,
+        account_email = $3
+    WHERE account_id = $4
+  `;
+  await pool.query(sql, [firstname, lastname, normalizedEmail, accountId]);
+}
+
+/**
+ * Update account password
+ */
+async function updateAccountPassword(accountId, hashedPassword) {
+  const sql = `
+    UPDATE account
+    SET account_password = $1
+    WHERE account_id = $2
+  `;
+  await pool.query(sql, [hashedPassword, accountId]);
 }
 
 module.exports = {
   findAccountByEmail,
   registerAccount,
   getAccountById,
+  updateAccountDetails,
+  updateAccountPassword,
 };

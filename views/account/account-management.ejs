@@ -1,22 +1,39 @@
 <div class="auth-container">
   <h1 class="auth-title"><%= title %></h1>
 
-  <% const flash = (flashMessage?.[0] || errors?.[0] || "").trim(); %> <% if
-  (flash.length > 0) { %>
-  <div class="flash-message error"><%= flash %></div>
+  <% if (message?.length > 0) { %>
+  <div class="flash-message success"><%= message %></div>
+  <% } %> <% if (errorMessage?.length > 0) { %>
+  <div class="flash-message error"><%= errorMessage %></div>
   <% } %>
 
   <section class="form-wrapper">
-    <p><%= message %></p>
-
     <% if (account) { %>
-    <p>
-      Welcome, <%= account.account_firstname %> <%= account.account_lastname %>!
-    </p>
+    <h2>Welcome <%= account.account_firstname %></h2>
+
     <p>Email: <%= account.account_email %></p>
     <p>Account Type: <%= account.account_type %></p>
-    <% } else { %>
+
+    <!-- Update Account Link (Visible to all) -->
+    <p>
+      <a href="/account/update-account/<%= account.account_id %>">
+        Update Account Information
+      </a>
+    </p>
+
+    <!-- Inventory Management Access (Only for Employee/Admin) -->
+    <% if (["Employee", "Admin"].includes(account.account_type)) { %>
+    <h3>Inventory Management</h3>
+    <p>
+      <a href="/inv">Access Inventory Management</a>
+    </p>
+    <% } %> <% } else { %>
     <p>No account data found.</p>
     <% } %>
   </section>
+  <div class="form-wrapper">
+    <form action="/account/logout" method="get" class="logout-form">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
 </div>

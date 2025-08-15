@@ -53,6 +53,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  res.locals.loggedin = req.session.loggedin || false;
+  res.locals.accountFirstname = req.session.accountFirstname || null;
+  next();
+});
+
 // Body parser middleware
 // I saw from research that express from version 4.16.0 onwards has built-in body parsing
 // capabilities, so we can use express.json() and express.urlencoded() directly.

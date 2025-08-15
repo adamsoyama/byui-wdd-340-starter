@@ -3,111 +3,121 @@ const router = new express.Router();
 const invController = require("../controllers/invController");
 const invValidate = require("../utilities/inventory-validation");
 const Util = require("../utilities");
+const checkInventoryAccess = require("../utilities/checkInventoryAccess");
 
 // ==============================
-// Inventory Views
+// Inventory Views (Public)
 // ==============================
 
-// Route to fetch inventory items by classification (e.g., SUVs, Trucks)
+// View inventory by classification
 router.get(
   "/type/:classificationId",
   Util.handleErrors(invController.buildByClassificationId)
 );
 
-// Route to display details of a specific vehicle
+// View inventory detail
 router.get(
   "/detail/:invId",
   Util.handleErrors(invController.buildInventoryDetailView)
 );
 
 // ==============================
-// Inventory Management
+// Inventory Management Dashboard (Protected)
 // ==============================
 
-// Route to display the inventory management dashboard
-router.get("/", Util.handleErrors(invController.buildManagement));
+router.get(
+  "/",
+  checkInventoryAccess,
+  Util.handleErrors(invController.buildManagement)
+);
 
 // ==============================
-// Add Classification
+// Add Classification (Protected)
 // ==============================
 
-// Route to display the form for adding a new classification
 router.get(
   "/add-classification",
+  checkInventoryAccess,
   Util.handleErrors(invController.buildAddClassification)
 );
 
-// Route to handle submission of new classification
 router.post(
   "/add-classification",
+  checkInventoryAccess,
   invValidate.classificationRules(),
   invValidate.checkClassificationData,
   Util.handleErrors(invController.postAddClassification)
 );
 
 // ==============================
-// Add Vehicle
+// Add Vehicle (Protected)
 // ==============================
 
-// Route to display the form for adding a new vehicle
-router.get("/add-vehicle", Util.handleErrors(invController.buildAddVehicle));
+router.get(
+  "/add-vehicle",
+  checkInventoryAccess,
+  Util.handleErrors(invController.buildAddVehicle)
+);
 
-// Route to handle submission of new vehicle data
 router.post(
   "/add-vehicle",
+  checkInventoryAccess,
   invValidate.inventoryRules(),
   invValidate.checkInventoryData,
   Util.handleErrors(invController.postAddVehicle)
 );
 
 // ==============================
-// Edit Vehicle
+// Edit Vehicle (Protected)
 // ==============================
 
-// Route to display the edit form for a specific inventory item
-router.get("/edit/:invId", Util.handleErrors(invController.editInventoryView));
+router.get(
+  "/edit/:invId",
+  checkInventoryAccess,
+  Util.handleErrors(invController.editInventoryView)
+);
 
-// Route to handle the POST request for updating inventory data
 router.post(
   "/update",
+  checkInventoryAccess,
   invValidate.inventoryRules(),
   invValidate.checkInventoryData,
   Util.handleErrors(invController.updateVehicle)
 );
 
 // ==============================
-// Delete Vehicle
+// Delete Vehicle (Protected)
 // ==============================
 
-// Route to display the delete confirmation view
 router.get(
   "/delete/:invId",
+  checkInventoryAccess,
   Util.handleErrors(invController.buildDeleteConfirmation)
 );
 
-// Route to handle deletion of a vehicle
 router.post(
   "/delete/:invId",
+  checkInventoryAccess,
   Util.handleErrors(invController.postDeleteInventory)
 );
 
 // ==============================
-// Inventory JSON API
+// Inventory JSON API (Protected)
 // ==============================
 
-// Route to return inventory data as JSON by classification
 router.get(
   "/getInventory/:classification_id",
+  checkInventoryAccess,
   Util.handleErrors(invController.getInventoryJSON)
 );
 
 // ==============================
-// Error Testing Route
+// Error Testing Route (Optional)
 // ==============================
 
-// Route to intentionally trigger an error for testing
 router.get(
   "/trigger-error",
+  checkInventoryAccess,
   Util.handleErrors(async (req, res) => {
     throw new Error("Intentional server error for testing.");
   })
